@@ -5,7 +5,7 @@
 // context (self will resolve to window.self)
 // but also in a worker context (self will then resolve to WorkerGlobalScope.self).
 
-const cacheName = 'v1';
+const cacheName = 'v2';
 
 // Call install
 // self in this case explaned on the top of the file
@@ -18,7 +18,7 @@ self.addEventListener('activate', event => {
     console.log('Service worker: Activate');
 
     // remove unwanted caches
-    e.waitUntil(
+    event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.map(cache => {
@@ -32,9 +32,9 @@ self.addEventListener('activate', event => {
     );
 });
 
-// Call fetch event - show cached files if we are offline
+//Call fetch event - show cached files if we are offline
 self.addEventListener('fetch', event => {
-    console.log('Service worker: Fetcing');
+    console.log('Service worker: fetching');
     // If we are offline the method will fail and we can fetch the data from the service worker
     event.respondWith(
         fetch(event.request)

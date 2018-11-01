@@ -33,8 +33,8 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
     console.log('Service worker: Activate');
 
-    // remove unwanted caches
-    e.waitUntil(
+    //remove unwanted caches
+    event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.map(cache => {
@@ -52,5 +52,5 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
     console.log('Service worker: Fetcing');
     // If we are offline the method will fail and we can fetch the data from the service worker
-    event.respondWith(fetch(event.request)).catch(() => caches.match(event.request));
+    event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
 });
